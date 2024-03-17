@@ -14,12 +14,9 @@ const LogIn = () => {
     const LogIn = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential: UserCredential) => {
+                const uid = userCredential.user.uid;
                 console.log(userCredential);
-                router.push('/home')
-
-
-
-
+                router.push(`/home/${uid}`); // Redirect to /home/uid
             })
             .catch((error) => {
                 console.log(error);
@@ -30,7 +27,8 @@ const LogIn = () => {
             const provider = new GoogleAuthProvider();
             const res = signInWithPopup(auth, provider)
             if ((await res).user) {
-                router.push('/home')
+                const uid = (await res).user.uid
+                router.push(`/home/${uid}`)
             } else {
                 console.error('Google sign-in failed');
             }

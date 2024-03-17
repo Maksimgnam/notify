@@ -3,7 +3,7 @@ import React, { FC, useState, useEffect } from 'react';
 import { auth } from '../../../app/firebase/config';
 import { useRouter } from 'next/navigation';
 interface User {
-    id: number,
+    uid: any,
     displayName: string,
     email: string
 }
@@ -19,15 +19,23 @@ const Menu: FC<MenuProps> = ({ menuWidth, isHide, isArrow, widthChange }) => {
     const name = user?.displayName.slice(0, 1);
     const router = useRouter()
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-            if (user) {
-                setUser(user);
+        const unsubscribe = auth.onAuthStateChanged((authUser) => {
+            if (authUser) {
+
+                const newUser: User = {
+                    uid: authUser.uid,
+                    displayName: authUser.displayName || '', // Handle cases where displayName is null
+                    email: authUser.email || '', // Handle cases where email is null
+                };
+                setUser(newUser);
             } else {
                 setUser(null);
             }
+            console.log(authUser)
         });
 
         return () => unsubscribe();
+
     }, []);
 
     const LogOut = async () => {

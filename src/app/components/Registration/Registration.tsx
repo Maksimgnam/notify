@@ -102,6 +102,8 @@ const Registration = () => {
                 setPassword('');
                 setName('');
                 alert('Successfully signed up');
+                const uid = res.user.uid;
+                router.push(`/home/${uid}`)
             } else {
                 console.error('Authentication failed');
                 alert('Authentication failed. Please check your credentials.');
@@ -117,7 +119,8 @@ const Registration = () => {
             const provider = new GoogleAuthProvider();
             const res = signInWithPopup(auth, provider)
             if ((await res).user) {
-                router.push('/home')
+                const uid = (await res).user.uid;
+                router.push(`/home/${uid}`)
             } else {
                 console.error('Google sign-in failed');
             }
@@ -133,7 +136,8 @@ const Registration = () => {
             const provider = new FacebookAuthProvider();
             const res = signInWithPopup(auth, provider)
             if ((await res).user) {
-                router.push('/home')
+                const uid = (await res).user.uid;
+                router.push(`/home/${uid}`)
             } else {
                 console.error('Google sign-in failed');
             }

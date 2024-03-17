@@ -1,8 +1,8 @@
 
 "use client"
 import { useState } from 'react';
-import Header from '../components/Header/Header';
-import Menu from '../components/Menu/Menu';
+import Header from '../../components/Header/Header';
+import Menu from '../../components/Menu/Menu';
 
 const Page = () => {
 
