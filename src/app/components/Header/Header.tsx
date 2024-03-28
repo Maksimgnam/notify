@@ -1,17 +1,22 @@
-import React from 'react'
-
-const Header = () => {
+import React, { FC } from 'react'
+interface HeaderProps {
+    date: any
+}
+const Header: FC<HeaderProps> = ({ date }) => {
     return (
         <div className='w-full h-14 flex items-center justify-between '>
-            <div className='w-40 h-12  flex items-center justify-around pl-1 '>
+
+
+            <div className='w-40 h-9 flex justify-around pl-3'>
                 <div className='w-9 h-9 bg-slate-100 rounded-md flex items-center justify-center'>
                     <img className='w-5 h-5' src="https://cdn-icons-png.flaticon.com/512/826/826165.png" alt="" />
                 </div>
                 <div className=' w-auto h-9 flex items-center '>
 
 
-                    <p className='text-lg  font-mono'>20.02.2024</p>
+                    <p className='text-lg  font-mono'>{date}</p>
                 </div>
+
 
             </div>
             <div className='w-2/6 h-10  flex items-center'>

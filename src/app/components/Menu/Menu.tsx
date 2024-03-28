@@ -1,11 +1,13 @@
-"use client"
+"use client";
 import React, { FC, useState, useEffect } from 'react';
 import { auth } from '../../../app/firebase/config';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 interface User {
     uid: any,
     displayName: string,
-    email: string
+    email: string,
+    photoURl: string
 }
 interface MenuProps {
     menuWidth: number,
@@ -13,10 +15,19 @@ interface MenuProps {
     isArrow: boolean,
     widthChange: () => void
 }
+interface Workspace {
+    id: any,
+    name: string,
+    description: string,
+    createdData: string
+}
 const Menu: FC<MenuProps> = ({ menuWidth, isHide, isArrow, widthChange }) => {
 
     const [user, setUser] = useState<User | null>(null);
+    const [workspaces, setWorkspaces] = useState<Workspace[]>([])
     const name = user?.displayName.slice(0, 1);
+    const uid = user?.uid;
+
     const router = useRouter()
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -24,8 +35,10 @@ const Menu: FC<MenuProps> = ({ menuWidth, isHide, isArrow, widthChange }) => {
 
                 const newUser: User = {
                     uid: authUser.uid,
-                    displayName: authUser.displayName || '', // Handle cases where displayName is null
-                    email: authUser.email || '', // Handle cases where email is null
+                    displayName: authUser.displayName || '',
+                    email: authUser.email || '',
+                    photoURl: authUser.photoURL || ''
+
                 };
                 setUser(newUser);
             } else {
@@ -37,6 +50,16 @@ const Menu: FC<MenuProps> = ({ menuWidth, isHide, isArrow, widthChange }) => {
         return () => unsubscribe();
 
     }, []);
+    useEffect(() => {
+        const fetchWorkspaces = async () => {
+            const response = await fetch('http://localhost:8000/api/workspaces');
+            const workspaces = await response.json();
+            setWorkspaces(workspaces)
+        }
+
+        fetchWorkspaces()
+
+    }, [])
 
     const LogOut = async () => {
         try {
@@ -86,6 +109,7 @@ const Menu: FC<MenuProps> = ({ menuWidth, isHide, isArrow, widthChange }) => {
 
                             <div className='w-10 h-10 bg-red-400 rounded-md flex items-center justify-center '>
                                 <p className='text-xl font-medium'> {name}</p>
+                                {/* <img src={user.photoURl} alt="" /> */}
                             </div>
                             {
                                 isHide && (
@@ -116,20 +140,26 @@ const Menu: FC<MenuProps> = ({ menuWidth, isHide, isArrow, widthChange }) => {
 
 
             </div >
-            <div className='w-full h-48  pl-2 '>
-                <div className='w-11/12 h-11 flex items-center'>
-                    <div className='w-9 h-9 rounded-md flex items-center justify-center '>
+            <div className='w-full h-auto  pl-2 '>
+                <div className='w-11/12 h-9 flex items-center'>
+                    <div className='w-9 h-full rounded-md flex items-center justify-center '>
                         <img className='w-5 h-5' src="https://cdn-icons-png.flaticon.com/512/82/82121.png" alt="" />
                     </div>
                     <h2 className='text-xl font-mono relative '>Tools</h2>
                 </div>
-                <div className='w-full h-36  flex flex-col justify-between pt-1 '>
-                    <div className='w-11/12 h-12 rounded-md'></div>
-                    <div className='w-11/12 h-12  rounded-md'></div>
-                    <div className='w-11/12 h-12  rounded-md'></div>
+                <div className='w-full h-auto  flex flex-col  pt-1 '>
+                    <Link href={`/home/${uid}/createWorkspace`}>
+                        <button className='w-11/12 h-12 rounded-md flex items-center pl-1.5 '>
+                            <div className='w-7 h-7 bg-gray-600 rounded flex items-center justify-center'>
+                                <p className='text-md text-white font-medium'>+</p>
+                            </div>
+                            <p className='text-lg  font-mono pl-2'>Create workspace</p>
+                        </button>
+                    </Link>
+
                 </div>
             </div>
-            <div className='w-full h-2/6  pl-2 pt-2 '>
+            <div className='w-full h-auto  pl-2 pt-2 '>
                 <div className='w-11/12 h-11 flex items-center'>
                     <div className='w-9 h-9  rounded-md flex items-center justify-center '>
                         <img className='w-6 h-6' src="https://cdn-icons-png.flaticon.com/512/301/301811.png" alt="" />
@@ -137,10 +167,24 @@ const Menu: FC<MenuProps> = ({ menuWidth, isHide, isArrow, widthChange }) => {
                     <h2 className='text-xl font-mono relative left-1'>Workspaces</h2>
                 </div>
 
-                <div className='w-full h-40  flex flex-col justify-between pt-1 '>
-                    <div className='w-11/12 h-12  rounded-md'></div>
-                    <div className='w-11/12 h-12  rounded-md'></div>
-                    <div className='w-11/12 h-12 0 rounded-md'></div>
+                <div className='w-full h-auto     '>
+                    {workspaces.map((item) => (
+                        <div>
+
+                            <Link href={`/home/${uid}/workspace/${item.id}`}>
+                                <div key={item.id} className='w-11/12 h-10  rounded flex items-center pl-1  m-2 ml-0 mt-0'>
+                                    <div className='w-8 h-8 bg-slate-200 rounded-md flex items-center justify-center'>
+                                        <p className='text-md font-medium'>W</p>
+                                    </div>
+                                    <p className='text-xl font-mono relative left-1.5' >  {item.name}</p>
+
+                                </div>
+                            </Link>
+                        </div>
+                    ))}
+
+
+
                 </div>
             </div>
             <div className='w-full h-1/6 flex items-end pl-3 '>

@@ -45,6 +45,10 @@ body {
 
 }
 
+.h-container {
+  height: 92vh;
+}
+
 .h-preview-container {
   height: 90vh;
 }

@@ -1,13 +1,19 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import Picture from '../Image/picture.png'
+
 
 const Container = () => {
     return (
-        <div className='w-full h-preview-container flex justify-center '>
-            <div className='w-11/12 h-full flex items-center '>
+        <div className='w-full h-preview-container flex  flex-wrap justify-center '>
 
-                <img className='w-7/12 h-5/6' src="https://media.licdn.com/dms/image/D5612AQEp9tLNfGw48A/article-cover_image-shrink_720_1280/0/1662617391228?e=2147483647&v=beta&t=t24FnWCSjNxwNcx4mAQE1fVrmCmoMNj3DUrVSkxdfgo" alt="" />
-                <div className='w-5/12 h-4/5 flex flex-col  justify-around'>
+            <div className='w-7/12 h-5/6   relative top-12'>
+                <Image src={Picture} fill alt='' />
+            </div>
+            <div className='w-5/12 h-full flex items-center '>
+
+                <div className='w-11/12 h-4/5 flex flex-col  justify-around'>
 
                     <div className='w-full'>
                         <h3 className='text-5xl font-mono' >Notify</h3>
@@ -15,7 +21,7 @@ const Container = () => {
                     </div>
 
                     <div className='w-full h-72 flex flex-col justify-between relative bottom-2'>
-                        <div className='w-10/12 h-16 flex items-center '>
+                        <div className='w-12/12 h-16 flex items-center '>
                             <div className='w-72 h-14 rounded-md  shadow flex items-center pl-2'>
                                 <div className='w-10 h-10 bg-green-100 rounded-md flex items-center justify-center'>
                                     <img className='w-6 h-6' src="https://cdn-icons-png.flaticon.com/512/826/826165.png" alt="" />
