@@ -4,7 +4,7 @@ import Header from '../Header/Header';
 import Link from 'next/link';
 
 interface WorkspaceParams {
-    params: { id: any, name: string, }
+    params: { id: string, name: string, }
 }
 interface Workspace {
     id: any,
@@ -23,7 +23,9 @@ interface Table {
 const Workspace: FC<WorkspaceParams> = ({ params }) => {
 
     const [workspace, setWorkspace] = useState<Workspace | null>(null);
-    const [tables, setTables] = useState<Table[]>([])
+    const [tables, setTables] = useState<Table[]>([]);
+    const [searchTable, setSearchTable] = useState<string>('');
+    const date = workspace?.createdDate;
     useEffect(() => {
         const fetchWorkspace = async () => {
             try {
@@ -58,10 +60,13 @@ const Workspace: FC<WorkspaceParams> = ({ params }) => {
 
         fetchTable();
     }, []);
-    const date = workspace?.createdDate;
+
+    const filteredTables = tables.filter(table =>
+        table.name.toLowerCase().includes(searchTable.toLowerCase())
+    )
     return (
         <div className='w-82% h-full  '>
-            <Header date={date} />
+            <Header date={date} searchTable={searchTable} setSearchTable={setSearchTable} />
             <div className='w-full h-container p-5 pt-3 '>
                 <div className='w-full h-auto  flex justify-between'>
                     <div className='w-auto h-auto '>
@@ -92,34 +97,44 @@ const Workspace: FC<WorkspaceParams> = ({ params }) => {
 
 
                 </div>
-                <div className='w-full h-5/6 flex flex-wrap pt-3'>
-                    {tables.map((item) => (
-                        <div>
-                            <Link href={`/home/${params.id}/workspace/${params.name}/table/${item.id}`}>
+                {
+                    filteredTables.length > 0 ? (
+                        <div className='w-full h-5/6 flex flex-wrap pt-3'>
+                            {filteredTables.map((item) => (
+                                <div>
+                                    <Link href={`/home/${params.id}/workspace/${params.name}/table/${item.id}`}>
 
-                                <div key={item.id} className='w-72 h-20 bg-white rounded-md shadow-table  flex items-center justify-between m-2 pl-2 '>
-                                    <div className='w-auto h-auto flex items-center'>
+                                        <div key={item.id} className='w-72 h-20 bg-white rounded-md shadow-table  flex items-center justify-between m-2 pl-2 '>
+                                            <div className='w-auto h-auto flex items-center'>
 
 
-                                        <div className='w-14 h-14 bg-sky-300 rounded flex items-center justify-center'>
-                                            <p className='text-4xl font-medium'>T</p>
+                                                <div className='w-14 h-14 bg-sky-300 rounded flex items-center justify-center'>
+                                                    <p className='text-4xl font-medium'>T</p>
+                                                </div>
+                                                <div className='w-auto h-16 flex flex-col relative left-2 pt-1'>
+                                                    <h2 className='text-xl font-medium'>{item.name}</h2>
+                                                    <p className='text-sm text-gray-500 font-medium'>{item.description}</p>
+
+                                                </div>
+                                            </div>
+                                            <div className='w-20 h-16 flex items-center justify-center '>
+
+                                            </div>
+
+
                                         </div>
-                                        <div className='w-auto h-16 flex flex-col relative left-2 pt-1'>
-                                            <h2 className='text-xl font-medium'>{item.name}</h2>
-                                            <p className='text-sm text-gray-500 font-medium'>{item.description}</p>
-
-                                        </div>
-                                    </div>
-                                    <div className='w-20 h-16 flex items-center justify-center '>
-
-                                    </div>
-
-
+                                    </Link>
                                 </div>
-                            </Link>
+                            ))}
                         </div>
-                    ))}
-                </div>
+                    ) : (
+                        <div className='w-full h-5/6 flex items-center justify-center'>
+                            <p className='text-4xl text-gray-400 font-medium'>Don't find tables</p>
+                        </div>
+
+                    )
+                }
+
             </div>
 
 

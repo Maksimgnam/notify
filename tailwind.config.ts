@@ -17,7 +17,8 @@ const config: Config = {
         '82%': '82%'
       },
       boxShadow: {
-        'table': '0 0 5px #ccc'
+        'table': '0 0 5px #ccc',
+        'block': '0 0 5px #ccc'
       }
     },
   },

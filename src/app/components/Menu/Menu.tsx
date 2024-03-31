@@ -149,11 +149,19 @@ const Menu: FC<MenuProps> = ({ menuWidth, isHide, isArrow, widthChange }) => {
                 </div>
                 <div className='w-full h-auto  flex flex-col  pt-1 '>
                     <Link href={`/home/${uid}/createWorkspace`}>
-                        <button className='w-11/12 h-12 rounded-md flex items-center pl-1.5 '>
+                        <button className='w-11/12 h-12 rounded-md flex items-center pl-1 '>
                             <div className='w-7 h-7 bg-gray-600 rounded flex items-center justify-center'>
                                 <p className='text-md text-white font-medium'>+</p>
                             </div>
                             <p className='text-lg  font-mono pl-2'>Create workspace</p>
+                        </button>
+                    </Link>
+                    <Link href={`/home/${uid}/searchWorkspace`}>
+                        <button className='w-11/12 h-12 rounded-md flex items-center '>
+                            <div className='w-7 h-7  rounded flex justify-center items-center'>
+                                <img className='w-4 h-4' src="https://cdn-icons-png.freepik.com/256/711/711319.png" alt="" />
+                            </div>
+                            <p className='text-lg  font-mono pl-1'>Search</p>
                         </button>
                     </Link>
 
@@ -161,9 +169,7 @@ const Menu: FC<MenuProps> = ({ menuWidth, isHide, isArrow, widthChange }) => {
             </div>
             <div className='w-full h-auto  pl-2 pt-2 '>
                 <div className='w-11/12 h-11 flex items-center'>
-                    <div className='w-9 h-9  rounded-md flex items-center justify-center '>
-                        <img className='w-6 h-6' src="https://cdn-icons-png.flaticon.com/512/301/301811.png" alt="" />
-                    </div>
+
                     <h2 className='text-xl font-mono relative left-1'>Workspaces</h2>
                 </div>
 

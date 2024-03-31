@@ -1,8 +1,10 @@
 import React, { FC } from 'react'
 interface HeaderProps {
-    date: any
+    date: any,
+    searchTable: string,
+    setSearchTable: React.Dispatch<React.SetStateAction<string>>;
 }
-const Header: FC<HeaderProps> = ({ date }) => {
+const Header: FC<HeaderProps> = ({ date, searchTable, setSearchTable }) => {
     return (
         <div className='w-full h-14 flex items-center justify-between '>
 
@@ -20,7 +22,7 @@ const Header: FC<HeaderProps> = ({ date }) => {
 
             </div>
             <div className='w-2/6 h-10  flex items-center'>
-                <input type="text" placeholder='Search...' className='w-3/5 h-10 border-2 border-gray-200  rounded-md pl-1 outline-none' />
+                <input value={searchTable} onChange={(e) => setSearchTable(e.target.value)} type="text" placeholder='Search...' className='w-3/5 h-10 border-2 border-gray-200  rounded-md pl-1 outline-none' />
                 <button className='w-12 h-10 bg-slate-200 rounded-sm flex items-center justify-center relative right-4 '>
                     <img className='w-6 h-6' src="https://cdn-icons-png.freepik.com/256/711/711319.png" alt="" />
                 </button>

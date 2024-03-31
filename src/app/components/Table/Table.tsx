@@ -2,6 +2,7 @@
 import React, { FC, useState, useEffect } from 'react'
 import Header from '../Header/Header'
 import TableHeader from './TableHeader/TableHeader'
+import Column from '../Column/Column'
 
 interface TableParams {
     params: {
@@ -44,12 +45,13 @@ const Table: FC<TableParams> = ({ params }) => {
         <div className='w-full h-full'>
             <TableHeader name={name} date={date} />
             <div className='w-full h-container  flex flex-wrap'>
-                <div className='w-1/6 h-full bg-gray-100  border border-gray-300'></div>
-                <div className='w-1/6 h-full bg-gray-100  border border-gray-300'></div>
-                <div className='w-1/6 h-full bg-gray-100  border border-gray-300'></div>
-                <div className='w-1/6 h-full bg-gray-100  border border-gray-300'></div>
-                <div className='w-1/6 h-full bg-gray-100  border border-gray-300'></div>
-                <div className='w-1/6 h-full bg-gray-100  border border-gray-300'></div>
+                <Column />
+                <Column />
+                <Column />
+                <Column />
+                <Column />
+                <Column />
+
             </div>
 
         </div>

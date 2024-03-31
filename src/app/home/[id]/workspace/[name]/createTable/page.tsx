@@ -1,13 +1,15 @@
 'use client'
 import React, { FC, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 
 interface Params {
-    params: { name: string }
+    params: { id: string, name: string }
 }
 
 const page: FC<Params> = ({ params }) => {
     const currentDate = new Date();
+    const router = useRouter()
     const [tableData, setTableData] = useState({
         name: '',
         description: '',
@@ -27,8 +29,10 @@ const page: FC<Params> = ({ params }) => {
                 body: JSON.stringify(tableData),
             });
 
+
             const result = await response.json();
             console.log(result);
+            router.push(`/home/${params.id}/workspace/${params.name}`)
 
             setTableData({
                 name: '',
