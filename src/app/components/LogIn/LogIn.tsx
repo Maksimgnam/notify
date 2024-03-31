@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import { useState } from 'react';
-import { signInWithEmailAndPassword, Auth, UserCredential, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
+import { signInWithEmailAndPassword, Auth, UserCredential, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, signInAnonymously } from 'firebase/auth';
 import { auth } from '../../../app/firebase/config';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -56,6 +56,20 @@ const LogIn = () => {
 
     }
 
+    // const guestLogIn = async () => {
+    //     try {
+    //         const res = await signInAnonymously(auth);
+    //         if (res.user) {
+    //             const uid = res.user.uid;
+    //             router.push(`/home/${uid}`);
+    //         } else {
+    //             console.error('Anonymous sign-in failed');
+    //         }
+    //     } catch (error) {
+    //         console.error(error);
+    //         alert('An error occurred during anonymous sign-in. Please try again later.');
+    //     }
+    // };
 
 
 
@@ -88,6 +102,7 @@ const LogIn = () => {
                         <p className='text-lg relative left-1 '>Continue with Facebook</p>
                     </div>
                 </button>
+
             </div>
         </div>
     )
