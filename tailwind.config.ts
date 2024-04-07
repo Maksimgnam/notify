@@ -16,6 +16,9 @@ const config: Config = {
       width: {
         '82%': '82%'
       },
+      height: {
+        'card': '68px'
+      },
       boxShadow: {
         'table': '0 0 5px #ccc',
         'block': '0 0 5px #ccc'
