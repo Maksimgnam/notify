@@ -1,7 +1,7 @@
 import Table from '@/app/components/Table/Table'
 import React, { FC } from 'react'
 interface TableParams {
-    params: { tableId: any, name: string }
+    params: {id:any, tableId: any, name: string }
 
 
 }
