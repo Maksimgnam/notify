@@ -1,9 +1,7 @@
 'use client'
 import React, { FC, useState, useEffect, useRef } from 'react';
-import Header from '../Header/Header';
 import Link from 'next/link';
-import tippy from 'tippy.js';
-import 'tippy.js/dist/tippy.css';
+
 
 interface WorkspaceParams {
     params: { id: string, name: string, }
@@ -42,26 +40,6 @@ const Workspace: FC<WorkspaceParams> = ({ params }) => {
     const scheduleRef = useRef(null);
 
 
-    useEffect(() => {
-
-        if (reminderRef.current) {
-            tippy(reminderRef.current, {
-                content: 'Create Reminder',
-            });
-        }
-
-    }, []);
- 
-    useEffect(() => {
-        if (tableRef.current) {
-            tippy(tableRef.current, {
-
-                content: 'Create Table',
-            });
-        }
-
-
-    }, []);
     useEffect(() => {
         const fetchWorkspace = async () => {
             try {
@@ -151,7 +129,7 @@ const Workspace: FC<WorkspaceParams> = ({ params }) => {
                             <input value={searchTable} onChange={(e) => setSearchTable(e.target.value)} type="text" placeholder='Search...' className='w-48 h-9 border-2 border-gray-200  rounded-md pl-1 outline-none' />
 
                         </div>
-                        <div className='w-32  h-10 bg-slate-100 rounded-md flex items-center justify-around '>
+                        <div className='w-20  h-10 bg-slate-100 rounded-md flex items-center justify-around '>
 
 
                             <Link href={`/home/${params.id}/workspace/${workspace?.id}/createReminder`}>
@@ -159,11 +137,7 @@ const Workspace: FC<WorkspaceParams> = ({ params }) => {
                                     <p className='text-xl font-medium'>+</p>
                                 </button>
                             </Link>
-                            <Link href={`/home/${params.id}/workspace/${workspace?.id}/createSchedule`}>
-                                <button ref={scheduleRef} className='w-8 h-8 bg-green-300 rounded'>
-                                    <p className='text-xl font-medium'>+</p>
-                                </button>
-                            </Link>
+                       
                             <Link href={`/home/${params.id}/workspace/${workspace?.id}/createTable`}>
                                 <button ref={tableRef} className='w-8 h-8 bg-sky-300 rounded'>
                                     <p className='text-xl font-medium'>+</p>
