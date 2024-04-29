@@ -23,11 +23,7 @@ interface Table {
     description: string,
     createdDate: string
 }
-interface Schedule {
-    id: any,
-    name: string,
-    createdDate: string
-}
+
 interface Reminder {
     id: any,
     name: string,
@@ -39,7 +35,6 @@ const Workspace: FC<WorkspaceParams> = ({ params }) => {
     const [workspace, setWorkspace] = useState<Workspace | null>(null);
     const [tables, setTables] = useState<Table[]>([]);
     const [reminders, setReminders] = useState<Reminder[]>([]);
-    const [schedules, setSchedules] = useState<Schedule[]>([])
     const [searchTable, setSearchTable] = useState<string>('');
     const date = workspace?.createdDate;
     const tableRef = useRef(null);
@@ -56,15 +51,7 @@ const Workspace: FC<WorkspaceParams> = ({ params }) => {
         }
 
     }, []);
-    useEffect(() => {
-
-        if (scheduleRef.current) {
-            tippy(scheduleRef.current, {
-                content: 'Create Schedule',
-            });
-        }
-
-    }, []);
+ 
     useEffect(() => {
         if (tableRef.current) {
             tippy(tableRef.current, {
@@ -119,30 +106,18 @@ const Workspace: FC<WorkspaceParams> = ({ params }) => {
 
             }
         };
-        const fetchSchedules = async () => {
-            try {
-                const response = await fetch(`http://localhost:8000/api/schedules/${params.name}`);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                setSchedules(data);
-            } catch (err) {
-                console.error('Error fetching workspace:', err);
-
-            }
-        };
+    
 
         fetchTables();
         fetchReminders();
-        fetchSchedules()
+  
     }, []);
 
     const filteredTables = tables.filter(table =>
         table.name.toLowerCase().includes(searchTable.toLowerCase())
     )
     return (
-        <div className='w-82% h-full '>
+        <div className='w-82% h-full   '>
             <div className='w-full h-container p-5 pt-5 '>
                 <div className='w-full h-auto  flex justify-between'>
                     <div className='w-auto h-auto '>
@@ -207,7 +182,7 @@ const Workspace: FC<WorkspaceParams> = ({ params }) => {
                             {
                                 reminders.map((item) => (
                                     <div>
-                                        <Link href={`/home/${params.id}/workspace/${params.name}/table/${item.id}`}>
+                                        <Link href={`/home/${params.id}/workspace/${params.name}/reminder/${item.id}`}>
 
                                             <div key={item.id} className='w-72 h-card bg-white rounded-md shadow-table  flex items-center justify-between m-2 pl-2 '>
                                                 <div className='w-auto h-auto flex items-center'>
@@ -241,41 +216,7 @@ const Workspace: FC<WorkspaceParams> = ({ params }) => {
                             }
 
 
-                            {
-                                schedules.map((item) => (
-                                    <div>
-                                        <Link href={`/home/${params.id}/workspace/${params.name}/table/${item.id}`}>
-
-                                            <div key={item.id} className='w-72 h-card bg-white rounded-md shadow-table  flex items-center justify-between m-2 pl-2 '>
-                                                <div className='w-auto h-auto flex items-center'>
-
-
-                                                    <div className='w-12 h-12 bg-green-300 rounded flex items-center justify-center'>
-                                                        <p className='text-3xl font-medium'>S</p>
-                                                    </div>
-                                                    <div className='w-auto h-12 flex flex-col   relative left-2 '>
-                                                        <h2 className='text-xl font-medium'>{item.name}</h2>
-                                                        <p className='text-sm text-gray-400 font-medium'>{item.createdDate}</p>
-
-
-                                                    </div>
-                                                </div>
-                                                <div className='w-24 h-12 flex justify-end items-center    '>
-                                                    <div className='w-9 h-9 hover:bg-gray-100 rounded-md flex items-center justify-center relative right-4'>
-                                                        <div className='w-5  h-full  flex justify-between items-center '>
-                                                            <div className='w-1 h-1 bg-black rounded-full'></div>
-                                                            <div className='w-1 h-1 bg-black rounded-full'></div>
-                                                            <div className='w-1 h-1 bg-black rounded-full'></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-                                        </Link>
-                                    </div>
-                                ))
-                            }
+                       
                             {filteredTables.map((item) => (
                                 <div>
                                     <Link href={`/home/${params.id}/workspace/${params.name}/table/${item.id}`}>

@@ -2,6 +2,7 @@
 import React, { FC } from 'react'
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+
 interface Workspace {
     id: any,
     name: string,
@@ -58,6 +59,7 @@ const page: FC<Params> = ({ params }) => {
                 </div>
 
             </div>
+
         </div>
     )
 }

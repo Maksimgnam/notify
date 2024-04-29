@@ -3,6 +3,7 @@ import React, { FC, useState, useEffect } from 'react';
 import { auth } from '../../../app/firebase/config';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 interface User {
     uid: any,
     displayName: string,
@@ -75,7 +76,7 @@ const Menu: FC<MenuProps> = ({ menuWidth, isHide, isArrow, widthChange }) => {
 
 
     return (
-        <div style={{ width: `${menuWidth}%` }} className='h-full  bg-menu flex flex-col items-center  '>
+        <div style={{ width: `${menuWidth}%` }} className='h-full   flex flex-col items-center  '>
             {
                 isArrow && (
                     <div className='w-full h-11 flex items-center justify-center '>
@@ -164,14 +165,37 @@ const Menu: FC<MenuProps> = ({ menuWidth, isHide, isArrow, widthChange }) => {
                             <p className='text-lg  font-mono pl-1'>Search</p>
                         </button>
                     </Link>
+                    <Link href={`/home/${uid}/jars`}>
+                    <button className='w-11/12 h-12 rounded-md flex items-center '>
+                                <div className='w-8 h-8 bg-slate-100  rounded-md flex items-center justify-center'>
+                                  <img className='w-6 h-6' src="https://images.emojiterra.com/google/noto-emoji/unicode-15.1/color/1024px/1fad9.png" alt="" />
+                               </div>
+                               <p className='text-xl font-mono pl-1 ' > Jars</p>
+                    </button>
+                    </Link>
+
 
                 </div>
+              
+             
             </div>
+            
             <div className='w-full h-auto  pl-2 pt-2 '>
+
+                
+            <div className='w-full h-auto     '>
+               
+            
+             
+
+
+
+           </div>
                 <div className='w-11/12 h-11 flex items-center'>
 
                     <h2 className='text-xl font-mono relative left-1'>Workspaces</h2>
                 </div>
+                
 
                 <div className='w-full h-auto     '>
                     {workspaces.map((item) => (
@@ -192,6 +216,10 @@ const Menu: FC<MenuProps> = ({ menuWidth, isHide, isArrow, widthChange }) => {
 
 
                 </div>
+            </div>
+            <div className='w-full h-auto  pl-2 pt-2 '>
+               
+
             </div>
             <div className='w-full h-1/6 flex items-end pl-3 '>
                 <button onClick={LogOut} className='w-9/12 h-12 bg-gray-200 rounded-md flex items-center pl-3'>

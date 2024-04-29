@@ -7,7 +7,7 @@ interface TableParams {
 }
 const page: FC<TableParams> = ({ params }) => {
     return (
-        <div><Table params={params} /></div>
+        <div className='w-full h-full'><Table params={params} /></div>
     )
 }
 

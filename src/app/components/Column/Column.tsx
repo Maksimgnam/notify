@@ -1,15 +1,35 @@
-import React from 'react'
+import React, { FC, useState } from 'react'
+import Task from '../Task/Task';
+import { start } from 'repl';
+import createTask from '../CeateTask/createTask';
+import CreateTask from '../CeateTask/createTask';
 
-const Column = () => {
+interface ColumnProps {
+    date: string,
+
+
+
+
+}
+const Column: FC<ColumnProps> = ({ date }) => {
+    const [tasks, setTasks] = useState<string[]>([]);
+    const [newTask, setNewTask] = useState<string>('')
     return (
-        <div className='w-1/6 h-full bg-gray-100  border border-gray-300'>
-            <div className='w-full h-10  flex items-center justify-between p-3 '>
-                <h2 className='text-lg font-medium'>Day </h2>
-                <button className='w-7 h-7 bg-gray-600 rounded'>
-                    <p className='text-lg text-white font-medium'>+</p>
-                </button>
+        <div className='w-auto h-full    '>
+            <div className='w-column h-10  flex items-center p-3 '>
+                <h2 className='text-lg font-medium'>{date} </h2>
+               
+
             </div>
-            <div className='w-full h-auto flex items-center justify-center'>
+            <div className='w-column h-auto flex  pt-1 pl-3 '>
+                <div className='w-9/12 h-1px bg-gray-200 rounded-xl'></div>
+            </div>
+
+            <div className='w-column  h-auto flex flex-col items-center justify-center'>
+                {/* <CreateTask /> */}
+                <Task />
+
+
 
             </div>
         </div>
